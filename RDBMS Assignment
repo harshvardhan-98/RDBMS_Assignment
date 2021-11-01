@@ -1,0 +1,83 @@
+knoldus@knoldus-Latitude-3520:~$ sudo mysql -u root
+[sudo] password for knoldus: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.27-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database Assignment;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use Assignment;
+Database changed
+mysql> create table Product(
+    -> pid int,
+    -> price int,
+    -> name varchar(255),
+    -> primary key(pid));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> describe Product;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| pid   | int          | NO   | PRI | NULL    |       |
+| price | int          | YES  |     | NULL    |       |
+| name  | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table Cart(
+    -> pid int,
+    -> qty int,
+    -> foreign key(pid) references Product(pid));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> describe Cart;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| pid   | int  | YES  | MUL | NULL    |       |
+| qty   | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into Product values(1, 150, "BurgerHarsh");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Product values(2, 250, "PizzaHarsh");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Product values(3, 350, "ShahiPaneerHarsh");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete from Cart where pid=2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into Cart values(1,6);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Cart values(2,3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Cart values(3,8);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select sum(price*qty) from Product Inner Join Cart on Product.pid=Cart.pid;
++----------------+
+| sum(price*qty) |
++----------------+
+|           4450 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> 
+
+
